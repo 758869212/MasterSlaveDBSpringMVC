@@ -1,6 +1,7 @@
 package com.dong.service;
 
 import com.dong.annotation.DataSource;
+import com.dong.annotation.DataSourceEnum;
 import com.dong.persistence.entity.User;
 
 /**
@@ -16,7 +17,7 @@ public interface UserService {
      * @date 2017 -02-22 16:56:20
      * @version 2.4.2
      */
-    @DataSource("write")
+    @DataSource(DataSourceEnum.DATA_SOURCE_WRITE)
     void createUser(User user) throws Exception;
 
     /**
@@ -29,6 +30,6 @@ public interface UserService {
      * @date 2017 -02-22 16:56:20
      * @version 2.4.2
      */
-    @DataSource("write")
+    @DataSource(DataSourceEnum.DATA_SOURCE_READ)
     User findOne(Long userId) throws Exception;
 }
