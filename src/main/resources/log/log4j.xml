@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <!-- [控制台STDOUT] -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="encoding" value="UTF-8"/>
+        <param name="target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [ Logger:%c  Method: %l ]%n%p:%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- [公共Appender] -->
+    <!-- 记录所有的日志 -->
+    <appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-default.log"/>
+        <param name="Append" value="true"/>
+        <param name="Encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH'.log'"/><!-- 每天每小时备份一次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [ Logger:%c  Method: %l ]%n%p:%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- [组件日志APPENDER] -->
+    <!-- 记录自定义的Info等级以上的日志 -->
+    <appender name="INFO-APPENDER"
+              class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-info.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="info"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a'.log'"/><!-- 每天备份两次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [ Logger:%c  Method: %l ]%n%p:%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- [警告日志APPENDER] -->
+    <!-- 记录自定义的Warn等级以上的日志 -->
+    <appender name="WARN-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-warn.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a'.log'"/><!-- 每天备份两次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [ Logger:%c  Method: %l ]%n%p:%m%n"/>
+        </layout>
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="warn"/>
+            <param name="levelMax" value="warn"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- [错误日志APPENDER] -->
+    <!-- 记录自定义的Error等级以上的日志 -->
+    <appender name="ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-error.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a'.log'"/><!-- 每天备份两次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [ Logger:%c  Method: %l ]%n%p:%m%n"/>
+        </layout>
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="error"/>
+            <param name="levelMax" value="error"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- [用户操作日志APPENDER] -->
+    <!-- 记录用户操作的Info等级以上的日志 -->
+    <appender name="USER-OPERATION-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-userOperation.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="info"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a'.log'"/><!-- 每天备份两次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="MyShiro-Log-%d{yyyyMMddHHmmssSSS}=%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- [消息推送日志APPENDER] -->
+    <!-- 记录消息推送的Info等级以上的日志 -->
+    <appender name="MESSAGE-PUSH-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="D://logs/common-messagePush.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="info"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd-a'.log'"/><!-- 每天备份两次 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="MyShiro-Log-%d{yyyyMMddHHmmssSSS}=%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 记录自定义日志：[组件日志] -->
+    <logger name="SystemRunLog">
+        <level value="INFO"/>
+        <appender-ref ref="INFO-APPENDER"/><!-- 记录自定义Info等级以上的日志 -->
+        <appender-ref ref="WARN-APPENDER"/><!-- 记录自定义Warn等级以上的日志 -->
+        <appender-ref ref="ERROR-APPENDER"/><!-- 记录自定义Error等级以上的日志 -->
+    </logger>
+
+    <!-- 记录自定义日志：[用户操作日志] -->
+    <logger name="UserOperationLog">
+        <level value="INFO"/>
+        <appender-ref ref="USER-OPERATION-APPENDER"/><!-- 记录用户操作的Info等级以上的日志 -->
+    </logger>
+
+    <!-- 记录自定义日志：[消息推送日志] -->
+    <logger name="MessagePushLog">
+        <level value="INFO"/>
+        <appender-ref ref="MESSAGE-PUSH-APPENDER"/>
+    </logger>
+
+    <!-- Root Logger -->
+    <root>
+        <level value="INFO"></level>
+        <appender-ref ref="DEFAULT-APPENDER"/><!-- 记录所有的日志 -->
+        <appender-ref ref="console"/><!-- 控制台STDOUT的日志 -->
+    </root>
+</log4j:configuration>
